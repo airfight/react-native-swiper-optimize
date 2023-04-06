@@ -766,7 +766,8 @@ export default class extends Component {
   }
 
   renderScrollView = pages => {
-    const {total,width,index} = this.state
+    const {total,width,height,index,dir} = this.state
+    const isVertical = dir === 'y';
     return (
       <ScrollView
         ref={this.refScrollView}
@@ -774,7 +775,7 @@ export default class extends Component {
         {...this.scrollViewPropOverrides()}
         contentContainerStyle={[styles.wrapperIOS, this.props.style]}
         // contentOffset={this.state.offset}
-        contentOffset={total > 1 ? {x:(index + 1) * width,y:0} : this.state.offset}
+        contentOffset={total > 1 ? {x:isVertical ? 0 : (index + 1) * width,y:isVertical ? (index + 1) * height : 0} : this.state.offset}
         onScrollBeginDrag={this.onScrollBegin}
         onMomentumScrollEnd={this.onScrollEnd}
         onScrollEndDrag={this.onScrollEndDrag}
