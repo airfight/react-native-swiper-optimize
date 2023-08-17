@@ -143,5 +143,6 @@ declare module 'react-native-swiper-optimize' {
   export default class Swiper extends Component<SwiperProps, SwiperState> {
     scrollBy: (index?: number, animated?: boolean) => void
     scrollTo: (index: number, animated?: boolean) => void
+    scrollByCode: (index: number, animated?: boolean) => void
   }
 }

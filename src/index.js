@@ -550,7 +550,50 @@ export default class extends Component {
       })
     }
   }
+  /**
+   * 点击swiper 滚动
+   */
+  scrollByCode = (indexs, animated = true) => {
+    const index = indexs + 1;
+    if (this.autoplayTimer) {
+      clearTimeout(this.autoplayTimer)
+    }
+    this.internals.isScrolling = false;
+    if (
+      this.internals.isScrolling ||
+      this.state.total < 2 
+    )
+      return
 
+    const state = this.state
+    const diff = this.state.index + (index - this.state.index)
+
+    let x = 0
+    let y = 0
+    if (state.dir === 'x') x = diff * state.width
+    if (state.dir === 'y') y = diff * state.height
+
+    this.scrollView && this.scrollView.scrollTo({ x, y, animated })
+
+    // update scroll state
+    this.internals.isScrolling = true
+    this.setState({
+      autoplayEnd: false
+    })
+
+    // trigger onScrollEnd manually in android
+    if (!animated || Platform.OS !== 'ios') {
+      setImmediate(() => {
+        this.onScrollEnd({
+          nativeEvent: {
+            position: diff
+          }
+        })
+      })
+    }
+    this.autoplay();
+
+  }
   /**
    * Scroll to index
    * @param  {number} index page
