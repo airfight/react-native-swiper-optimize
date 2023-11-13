@@ -249,7 +249,7 @@ export default class extends Component {
 
     // Support Optional render page
     initState.children = Array.isArray(props.children)
-      ? props.children.filter(child => child)
+      ? props.children.filter((child) => child)
       : props.children
 
     initState.total = initState.children ? initState.children.length || 1 : 0
@@ -298,7 +298,7 @@ export default class extends Component {
     return Object.assign({}, this.state, this.internals)
   }
 
-  onLayout = event => {
+  onLayout = (event) => {
     const { width, height } = event.nativeEvent.layout
     const offset = (this.internals.offset = {})
     const state = { width, height }
@@ -395,7 +395,7 @@ export default class extends Component {
    * Scroll begin handle
    * @param  {object} e native event
    */
-  onScrollBegin = e => {
+  onScrollBegin = (e) => {
     // update scroll state
     this.internals.isScrolling = true
     this.props.onScrollBeginDrag &&
@@ -406,7 +406,7 @@ export default class extends Component {
    * Scroll end handle
    * @param  {object} e native event
    */
-  onScrollEnd = e => {
+  onScrollEnd = (e) => {
     // update scroll state
     this.internals.isScrolling = false
 
@@ -436,7 +436,7 @@ export default class extends Component {
    * Drag end handle
    * @param {object} e native event
    */
-  onScrollEndDrag = e => {
+  onScrollEndDrag = (e) => {
     const { contentOffset } = e.nativeEvent
     const { horizontal } = this.props
     const { children, index } = this.state
@@ -554,16 +554,12 @@ export default class extends Component {
    * 点击swiper 滚动
    */
   scrollByCode = (indexs, animated = true) => {
-    const index = indexs + 1;
+    const index = indexs + 1
     if (this.autoplayTimer) {
       clearTimeout(this.autoplayTimer)
     }
-    this.internals.isScrolling = false;
-    if (
-      this.internals.isScrolling ||
-      this.state.total < 2 
-    )
-      return
+    this.internals.isScrolling = false
+    if (this.internals.isScrolling || this.state.total < 2) return
 
     const state = this.state
     const diff = this.state.index + (index - this.state.index)
@@ -591,8 +587,7 @@ export default class extends Component {
         })
       })
     }
-    this.autoplay();
-
+    this.autoplay()
   }
   /**
    * Scroll to index
@@ -659,7 +654,7 @@ export default class extends Component {
         prop !== 'onScrollBeginDrag'
       ) {
         let originResponder = props[prop]
-        overrides[prop] = e => originResponder(e, this.fullState(), this)
+        overrides[prop] = (e) => originResponder(e, this.fullState(), this)
       }
     }
 
@@ -731,6 +726,9 @@ export default class extends Component {
   }
 
   renderTitle = () => {
+    if (!this.state?.children || this.state?.children?.length <= 0) {
+      return null
+    }
     const child = this.state.children[this.state.index]
     const title = child && child.props && child.props.title
     return title ? (
@@ -793,11 +791,11 @@ export default class extends Component {
     )
   }
 
-  refScrollView = view => {
+  refScrollView = (view) => {
     this.scrollView = view
   }
 
-  onPageScrollStateChanged = state => {
+  onPageScrollStateChanged = (state) => {
     switch (state) {
       case 'dragging':
         return this.onScrollBegin()
@@ -808,9 +806,9 @@ export default class extends Component {
     }
   }
 
-  renderScrollView = pages => {
-    const {total,width,height,index,dir} = this.state
-    const isVertical = dir === 'y';
+  renderScrollView = (pages) => {
+    const { total, width, height, index, dir } = this.state
+    const isVertical = dir === 'y'
     return (
       <ScrollView
         ref={this.refScrollView}
@@ -818,7 +816,14 @@ export default class extends Component {
         {...this.scrollViewPropOverrides()}
         contentContainerStyle={[styles.wrapperIOS, this.props.style]}
         // contentOffset={this.state.offset}
-        contentOffset={total > 1 ? {x:isVertical ? 0 : (index + 1) * width,y:isVertical ? (index + 1) * height : 0} : this.state.offset}
+        contentOffset={
+          total > 1
+            ? {
+                x: isVertical ? 0 : (index + 1) * width,
+                y: isVertical ? (index + 1) * height : 0
+              }
+            : this.state.offset
+        }
         onScrollBeginDrag={this.onScrollBegin}
         onMomentumScrollEnd={this.onScrollEnd}
         onScrollEndDrag={this.onScrollEndDrag}
