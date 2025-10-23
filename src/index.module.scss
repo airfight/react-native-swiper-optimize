@@ -1,0 +1,54 @@
+@import '../../../common/style/scalePx';
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #fff;
+    z-index: 999;
+    overflow: hidden;
+}
+
+.optionItem {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: scale-px(32) scale-px(40);
+    border-bottom: scale-px(1) solid #e0e0e0;
+    height: scale-px(110);
+    font-size: scale-px(24);
+    width: 100%;
+    background-color: #fff;
+}
+
+.optionText {
+    font-size: scale-px(28);
+    line-height: scale-px(44);
+    color: #333;
+    font-weight: normal;
+}
+
+.optionTextActive {
+    color: #f02800;
+}
+
+.checkIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: scale-px(32);
+    height: scale-px(32);
+}
+
+.checkIconFont {
+    font-size: scale-px(32);
+    color: #f02800;
+    line-height: scale-px(32);
+}
